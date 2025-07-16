@@ -1,0 +1,304 @@
+.header {
+    --header-expand-height: 305px;
+    --header-animation: transform 300ms, background-color 300ms ease-in-out;
+    color: #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    min-height: var(--header-height);
+    background-color: var(--header-background-color, transparent);
+    transition: var(--header-animation);
+}
+
+@media(min-width:980px) {
+    .header .header-inner {
+        background-color: var(--header-background-color);
+        -webkit-transition: var(--header-animation);
+        transition: var(--header-animation)
+    }
+
+    .header .header-inner:hover {
+        background-color: #fff
+    }
+
+    .header .header-inner:hover:has(.header-global-nav.hover>li:hover) {
+        border-bottom: 1px solid #000
+    }
+}
+
+.header.header-scroll:not(.header-hide) .header-inner {
+    background-color: #fff
+}
+
+/* main 페이지에서는 header가 투명해지게 */
+
+.document:has(.main-visual) {
+    --header-background-color: transparent        
+}
+
+.document:has(.page-visual) {
+    --header-background-color: transparent        
+}
+
+.document:has(.page-main) {
+    --header-background-color: transparent        
+}
+
+/* scroll시 안보이게 */
+
+.document:has(.main-visual) .header-progress {
+    display: none
+}
+
+html:has(.header-nav-open),
+html:has(.header-nav-open) body {
+    overflow: hidden
+}
+
+.header-hide {
+    pointer-events: none
+}
+
+.header-hide .header-inner {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%)
+}
+
+.header-scroll-up {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-inner {
+    position: relative;
+    min-height: var(--header-height);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+
+.header-inner:hover {
+    background-color: white;
+}
+
+.header-nav {
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 72px;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 120px;
+    height: 31px;
+}
+
+.header-inform {
+    --max-height: 400px;
+    position: relative;
+}
+
+.header-inform-nav {
+    --header-gap: 40px;
+    white-space: nowrap;
+    /* 줄바꿈 안함 --> */
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+@media(min-width:980px) {
+    .header-global-nav.hover .header-global-sub {
+        opacity: 1;
+        max-height: var(--max-height)
+    }
+}
+
+.header-inform-nav>li {
+    position: relative;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.header-inform-nav>li:hover>strong>a {
+    color: #00C9B9
+}
+
+.header-inform-nav strong {
+    position: absolute;
+    top: 0;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--header-height);
+    padding-right: max(10px, var(--header-gap));
+    padding-left: max(10px, var(--header-gap));
+}
+
+.header-inform-sub {
+    margin-top: var(--header-height);
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    width: 100%;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s, opacity 0.6s;
+}
+
+.header-inform:hover .header-inform-sub {
+    max-height: var(--max-height);
+    opacity: 1;
+}
+
+.header-inform-nav>li:hover .header-inform-sub {
+    display: block;
+    max-height: 400px;
+    opacity: 1;
+}
+
+@media (min-width: 980px) {
+    .header-inform-nav>li:hover .header-inform-sub {
+        opacity: 1;
+        max-height: var(--max-height);
+        background-color: rgba(0, 0, 0, .02);
+    }
+}
+
+@media (min-width: 980px) {
+    .header-inform-nav.hover .header-inform-sub {
+        opacity: 1;
+        max-height: var(--max-height);
+    }
+}
+
+@media (min-width: 980px) {
+    .header-inform-nav>li:hover {
+        height: var(--header-expand-height);
+    }
+}
+
+.document:has(.main-visual) .header-progress {
+    display: none
+}
+
+.header-progress {
+    --percent: 0%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right,
+            #00C9B9 var(--percent),
+            #000 var(--percent));
+}
+
+.header-progress:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: var(--percent);
+    height: 100%;
+    background-color: var(--primary-normal)
+}
+
+.header-inform-sub ul {
+    width: 100%;
+    padding: 4px 0 36px;
+    list-style: none;
+    margin: 0;
+}
+
+.header-inform-sub a {
+    display: block;
+    padding: 12px 24px;
+    text-align: center;
+}
+
+.header-inform-sub a:hover {
+    text-decoration: underline;
+}
+
+.header-aside {
+    position: absolute;
+    right: max(var(--gutter), (100% - var(--max-width)) / 2 + var(--gutter));
+    top: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    height: 72px;
+}
+
+.header-family {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-family a {
+    font-weight: 500;
+}
+
+.header-family a img {
+    vertical-align: -3px;
+}
+
+.header-family a:hover {
+    text-decoration: underline;
+}
+
+.header-language {
+    margin-left: 5px;
+}
+
+.header-language a {
+    vertical-align: 1px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.header-language::before {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 12px;
+    background-color: #E5E5E5;
+    margin-right: 8px;
+}
+
+.header-language a img {
+    vertical-align: -2px;
+}
